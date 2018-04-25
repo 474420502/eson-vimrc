@@ -4,4 +4,6 @@ vim 编码设置  ./configure --enable-luainterp  --enable-python3interp  --with
 安装相关依赖 如 python<version> 
 apt install lua5.1 liblua5.1-0 liblua5.1-0-dev luajit libluajit-5.1-*  -y
 
+# java 很久没用 需要的 自己小改一下
+
 mv vimrc ~/.vimrc
