@@ -33,9 +33,9 @@ Plug 'scrooloose/nerdcommenter'
 " Class/module browser
 Plug 'majutsushi/tagbar'
 " Code and files fuzzy finder
-Plug 'ctrlpvim/ctrlp.vim'
-" Extension to ctrlp, for fuzzy command finder
-Plug 'fisadev/vim-ctrlp-cmdpalette'
+" Plug 'ctrlpvim/ctrlp.vim'
+" " Extension to ctrlp, for fuzzy command finder
+" Plug 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
 Plug 'mattn/emmet-vim'
 " Session
@@ -90,6 +90,9 @@ Plug 'lilydjwg/colorizer'
 Plug 'mindriot101/vim-yapf'
 "  format
 Plug 'Chiel92/vim-autoformat'
+" search 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " Relative numbering of lines (0 is the current line)
 " (disabled by default because is very intrusive and can't be easily toggled
 " on/off. When the plugin is present, will always activate the relative
@@ -110,9 +113,9 @@ endif
 " Vim settings and mappings
 " You can edit them as you wish
 " coding 
-set enc=utf8
-set fencs=utf8,gbk,gb2312,gb18030
-set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8,gbk,latin1
 " no vi-compatible
 set nocompatible
 " Set x = xall
@@ -140,7 +143,7 @@ set hlsearch
 " syntax highlight on
 syntax on
 " show line numbers
-set nonu
+set nu
 " autosession
 let g:workspace_session_name = '.session.vim'
 let g:workspace_autosave_always = 1
@@ -253,40 +256,15 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 " show pending tasks list
 map <F2> :TaskList<CR>
 
-" CtrlP ------------------------------
-
-" file finder mapping
-let g:ctrlp_map = ',e'
-" tags (symbols) in current file finder mapping
-nmap ,g :CtrlPBufTag<CR>
-" tags (symbols) in all files finder mapping
-nmap ,G :CtrlPBufTagAll<CR>
-" general code finder in all files mapping
-nmap ,f :CtrlPLine<CR>
-" recent files finder mapping
-nmap ,m :CtrlPMRUFiles<CR>
-" commands finder mapping
-nmap ,c :CtrlPCmdPalette<CR>
-" to be able to call CtrlP with default search text
-function! CtrlPWithSearchText(search_text, ctrlp_command_end)
-    execute ':CtrlP' . a:ctrlp_command_end
-    call feedkeys(a:search_text)
-endfunction
-" same as previous mappings, but calling with current word as default text
-nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
-nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
-nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
-nmap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
-" don't change working directory
-let g:ctrlp_working_path_mode = 0
-" ignore these files and folders on file finder
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
-            \ 'file': '\.pyc$\|\.pyo$',
-            \ }
+" fzf 
+nnoremap <silent> <Leader>f :Files<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+nnoremap <silent> <Leader>a :Ag<CR>
 
 " Syntastic ------------------------------
 
@@ -426,10 +404,10 @@ if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")| exe "normal g'\"" | endif
 endif
 
-au FileType go let g:mapleader = "`"
+" au FileType go let g:mapleader = "`"
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>t <Plug>(go-test-func)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
@@ -442,7 +420,7 @@ au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>e <Plug>(go-rename)
+" au FileType go nmap <Leader>e <Plug>(go-rename)
 
 au FileType go let g:go_highlight_functions = 1
 au FileType go let g:go_highlight_methods = 1
@@ -468,7 +446,7 @@ au FileType go let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes
 au FileType go let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*\|^\s*import \"'
 au FileType go let g:go_list_type = "quickfix"
 
-au FileType java nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-au FileType java nmap <F5> <Plug>(JavaComplete-Imports-Add)
-au FileType java nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-au FileType java nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+au FileType java nmap <F5> <Plug>(JavaComplete-Imports-AddSmart)
+au FileType java nmap <F6> <Plug>(JavaComplete-Imports-Add)
+au FileType java nmap <F7> <Plug>(JavaComplete-Imports-AddMissing)
+au FileType java nmap <F8> <Plug>(JavaComplete-Imports-RemoveUnused)
