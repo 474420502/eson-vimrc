@@ -68,11 +68,9 @@ Plug 'davidhalter/jedi-vim'
 " Better autocompletion
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+Plug '474420502/neosnippet-snippets'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-" Plug 'honza/vim-snippets'
 " Plug 'garbas/vim-snipmate'
 " Git/mercurial/others diff icons on the side of the file lines
 Plug 'mhinz/vim-signify'
@@ -100,7 +98,11 @@ Plug 'junegunn/fzf.vim'
 " to avoid that)
 
 " Plug 'artur-shaik/vim-javacomplete2'
+
+"  golang 
 Plug 'fatih/vim-go'
+" html js  
+Plug 'tomtom/tlib_vim'
 
 " Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
@@ -158,6 +160,11 @@ nmap ,s :ToggleWorkspace<CR>
 " let g:formatters_python = ['autopep8']
 noremap <F8> :Autoformat<CR>
 au FileType python noremap <F8> :Yapf<CR>
+
+" neosnippet
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+
+
 " tab navigation mappings
 map tn :tabn<CR>
 map tp :tabp<CR>
@@ -192,8 +199,6 @@ set completeopt-=preview
 " Save as sudo
 ca w!! w !sudo tee "%"
 " simple recursive grep
-" nmap ,r :Ack
-" nmap ,wr :Ack <cword><CR>
 
 " use 256 colors when possible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
@@ -312,9 +317,9 @@ function! s:my_cr_function()
 endfunction
 " AutoComplPop like behavior.
 " Shell like behavior(not recommended).
-let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_auto_select = 0
 " let g:neocomplete#disable_auto_complete = 1
-let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#enable_snipmate_compatibility = 0
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -439,7 +444,7 @@ au FileType go let g:go_def_mode = 'godef'
 au FileType go let g:go_snippet_engine = "neosnippet"
 au FileType go let g:go_term_enabled = 1
 au FileType go let g:go_auto_type_info = 1
-au FileType go let g:go_auto_sameids = 1
+au FileType go let g:go_auto_sameids = 0
 au FileType go nmap <F5> :GoImports<CR>
 au FileType go let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 au FileType go let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
