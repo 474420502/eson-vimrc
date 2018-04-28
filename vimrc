@@ -73,7 +73,7 @@ Plug '474420502/neosnippet-snippets'
 Plug 'MarcWeber/vim-addon-mw-utils'
 " Plug 'garbas/vim-snipmate'
 " Git/mercurial/others diff icons on the side of the file lines
-Plug 'mhinz/vim-signify'
+" Plug 'mhinz/vim-signify'
 " Automatically sort python imports
 Plug 'fisadev/vim-isort'
 " Drag visual blocks arround
@@ -163,7 +163,6 @@ au FileType python noremap <F8> :Yapf<CR>
 
 " neosnippet
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
-
 
 " tab navigation mappings
 map tn :tabn<CR>
@@ -269,8 +268,8 @@ command! -bang -nargs=* Ag
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
-nnoremap <silent> <Leader>a :Ag<CR>
-
+nnoremap <silent> <Leader>a :Ag <CR>
+nnoremap <silent> <Leader>w :Ag! <cword><CR>
 " Syntastic ------------------------------
 
 " show list of errors and warnings on the current file
@@ -449,7 +448,7 @@ au FileType go nmap <F5> :GoImports<CR>
 au FileType go let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 au FileType go let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 au FileType go let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*\|^\s*import \"'
-au FileType go let g:go_list_type = "quickfix"
+" au FileType go let g:go_list_type = "quickfix"
 
 au FileType java nmap <F5> <Plug>(JavaComplete-Imports-AddSmart)
 au FileType java nmap <F6> <Plug>(JavaComplete-Imports-Add)
