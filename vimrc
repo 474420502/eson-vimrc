@@ -97,8 +97,6 @@ Plug 'junegunn/fzf.vim'
 " numbering every time you go to normal mode. Author refuses to add a setting
 " to avoid that)
 
-" Plug 'artur-shaik/vim-javacomplete2'
-
 "  golang 
 Plug 'fatih/vim-go'
 " html js  
@@ -326,7 +324,6 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -450,8 +447,3 @@ au FileType go let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 au FileType go let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 au FileType go let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*\|^\s*import \"'
 " au FileType go let g:go_list_type = "quickfix"
-
-au FileType java nmap <F5> <Plug>(JavaComplete-Imports-AddSmart)
-au FileType java nmap <F6> <Plug>(JavaComplete-Imports-Add)
-au FileType java nmap <F7> <Plug>(JavaComplete-Imports-AddMissing)
-au FileType java nmap <F8> <Plug>(JavaComplete-Imports-RemoveUnused)
