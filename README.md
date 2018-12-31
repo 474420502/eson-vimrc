@@ -10,3 +10,8 @@ apt install lua5.1 liblua5.1-0 liblua5.1-0-dev luajit libluajit-5.1-* silversear
 mv vimrc ~/.vimrc
 
 会自动安装fzf
+
+上面将被废除
+
+修改一个新的配置使用nvim 
+https://github.com/474420502/nvim
